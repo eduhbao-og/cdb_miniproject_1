@@ -37,8 +37,14 @@ public class DTIClient {
                 long newCoinId = dtiStub.mint(value);
                 System.out.println("\nnew coin minted with ID: " + newCoinId + "\n");
 
-            //} else if (...) {
-                //deal with other commands
+            } else if(cmd.equalsIgnoreCase("MY_COINS")){
+                
+                long[] coins = dtiStub.MY_COINS();
+                System.out.println("\ncoins: ");
+                for(int i = 0; i < coins.length; i += 2){
+                    System.out.println("\nid: " + coins[i] + " value: " + coins[i+1]+ "\n");
+                }
+
             } else if (cmd.equalsIgnoreCase("EXIT")) {
 
                 System.out.println("\tEXIT: Bye bye!\n");

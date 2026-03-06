@@ -24,52 +24,64 @@ public class GenericMessage implements Serializable {
     private long value = 0;
     private long tokenId = -1;
     
+    private long[] coins;
+    
     //other possible data...
-
+    
+    
     public GenericMessage(Type type){
         this.type = type;
     }
-
+    
     public static byte[] toBytes(GenericMessage message) throws IOException {
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
         ObjectOutputStream objOut = new ObjectOutputStream(byteOut);
         objOut.writeObject(message);
-
+        
         objOut.flush();
         byteOut.flush();
-
+        
         return byteOut.toByteArray();
     }
-
+    
     public static GenericMessage fromBytes(byte[] rep) throws IOException, ClassNotFoundException {
         ByteArrayInputStream byteIn = new ByteArrayInputStream(rep);
         ObjectInputStream objIn = new ObjectInputStream(byteIn);
         return (GenericMessage) objIn.readObject();
     }
-
+    
     public Type getType() {
         return type;
     }
-
+    
     public void setType(Type type) {
         this.type = type;
     }
-
+    
     public long getValue() {
         return value;
     }
-
+    
     public void setValue(long value) {
         this.value = value;
     }
-
+    
     public long getTokenId() {
         return tokenId;
     }
-
+    
     public void setTokenId(long tokenId) {
         this.tokenId = tokenId;
     }
+    
+    public long[] getCoins() {
+        return coins;
+    }
+    
+    public void setCoins(long[] coins) {
+        this.coins = coins;
+    }
 
+    
     //more getters and setters for other possible data...
 }
