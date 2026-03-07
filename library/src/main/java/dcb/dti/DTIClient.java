@@ -68,6 +68,8 @@ public class DTIClient {
                 }
 
             }else if(cmd.equalsIgnoreCase("SPEND") && value != -1){
+                long change = dtiStub.SPEND(spendingCoins.stream().mapToLong(Long::longValue).toArray(), receiver, value);
+                System.out.println("\nSpent coins and received change: " + change + "\n");
 
             } else if(cmd.equalsIgnoreCase("MY_NFTS")){
                 
