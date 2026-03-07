@@ -58,7 +58,13 @@ public class DTIServer extends DefaultSingleRecoverable {
                     response.setCoins(temp);
                     break;
                 case MY_NFTS:
-                    response.setNFTs(storedNFTs);
+                    TreeMap<Long, NFT> result = new TreeMap<>();
+                    for(Map.Entry<Long, NFT> entry : storedNFTs.entrySet()) {
+                        if(entry.getValue().owner == senderId) {
+                            result.put(entry.getKey(), entry.getValue());
+                        }
+                    }
+                    response.setNFTs(result);
                 case MINT:
                     if(senderId != 4 ){
                         return new byte[0];
@@ -71,15 +77,15 @@ public class DTIServer extends DefaultSingleRecoverable {
                     response.setTokenId(coinId);
                     break;
                 case BUY_NFT:
-                    //process BUY_NFT request and fill the response...
+                    break;
                 case MINT_NFT:
-                    //process MINT_NFT request and fill the response...
+                    break;
                 case SEARCH_NFT:
-                    //process SEARCH_NFT request and fill the response...
+                    break;
                 case SET_NFT_PRICE:
-                    //process SET_NFT_PRICE request and fill the response...
+                    break;
                 case SPEND:
-                    //process SPEND request and fill the response...
+                    break;
                 default:
                     break;
             }
@@ -114,10 +120,15 @@ public class DTIServer extends DefaultSingleRecoverable {
                     response.setCoins(temp);
                     break;
                 case MY_NFTS:
-                    response.setNFTs(storedNFTs);
-                //deal with other cases...
+                    TreeMap<Long, NFT> result = new TreeMap<>();
+                    for(Map.Entry<Long, NFT> entry : storedNFTs.entrySet()) {
+                        if(entry.getValue().owner == senderId) {
+                            result.put(entry.getKey(), entry.getValue());
+                        }
+                    }
+                    response.setNFTs(result);
                 case BUY_NFT:
-                    //process BUY_NFT request and fill the response...
+                    break;
                 case MINT:
                     if(senderId != 4 ){
                         return new byte[0];
@@ -130,13 +141,13 @@ public class DTIServer extends DefaultSingleRecoverable {
                     response.setTokenId(coinId);
                     break;
                 case MINT_NFT:
-                    //process MINT_NFT request and fill the response...
+                    break;
                 case SEARCH_NFT:
-                    //process SEARCH_NFT request and fill the response...
+                    break;
                 case SET_NFT_PRICE:
-                    //process SET_NFT_PRICE request and fill the response...
+                    break;
                 case SPEND:
-                    //process SPEND request and fill the response...
+                    break;
                 default:
                     break;
             }
