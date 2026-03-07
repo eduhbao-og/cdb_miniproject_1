@@ -76,7 +76,8 @@ public class DTIClient {
                 for(Map.Entry<Long, NFT> entry : nfts.entrySet()) {
                     System.out.println("\nid: " + entry.getKey() 
                                     + ", name: " + entry.getValue().name 
-                                    + ", URI: " + entry.getValue().uri);
+                                    + ", URI: " + entry.getValue().uri
+                                    + ", value: " + entry.getValue().value);
                 }
 
             } else if (cmd.equalsIgnoreCase("MINT_NFT") && value != -1 && !name.equals("") && !uri.equals("")) {
