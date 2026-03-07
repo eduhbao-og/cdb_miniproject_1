@@ -9,6 +9,7 @@ import bftsmart.tom.ServiceReplica;
 import bftsmart.tom.server.defaultservices.DefaultSingleRecoverable;
 
 import java.io.*;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class DTIServer extends DefaultSingleRecoverable {
@@ -48,7 +49,14 @@ public class DTIServer extends DefaultSingleRecoverable {
 
             switch (cmd) {
                 case MY_COINS:
-                    //process MYCOINS request and fill the response...
+                    TreeMap<Long, Coin> temp = new TreeMap<Long, Coin>();
+                    for(Map.Entry<Long, Coin> entry : storedCoins.entrySet()) {
+                        if(entry.getValue().owner == senderId){
+                            temp.put(entry.getKey(), entry.getValue());
+                        }
+                    }
+                    response.setCoins(temp);
+                    break;
                 case MY_NFTS:
                     response.setNFTs(storedNFTs);
                 case MINT:
@@ -61,6 +69,7 @@ public class DTIServer extends DefaultSingleRecoverable {
                     }
                     storedCoins.put(coinId, coin);
                     response.setTokenId(coinId);
+                    break;
                 case BUY_NFT:
                     //process BUY_NFT request and fill the response...
                 case MINT_NFT:
@@ -96,7 +105,14 @@ public class DTIServer extends DefaultSingleRecoverable {
 
             switch (cmd) {
                 case MY_COINS:
-                    //process MY_COINS request and fill the response...
+                    TreeMap<Long, Coin> temp = new TreeMap<Long, Coin>();
+                    for(Map.Entry<Long, Coin> entry : storedCoins.entrySet()) {
+                        if(entry.getValue().owner == senderId){
+                            temp.put(entry.getKey(), entry.getValue());
+                        }
+                    }
+                    response.setCoins(temp);
+                    break;
                 case MY_NFTS:
                     response.setNFTs(storedNFTs);
                 //deal with other cases...
@@ -112,6 +128,7 @@ public class DTIServer extends DefaultSingleRecoverable {
                     }
                     storedCoins.put(coinId, coin);
                     response.setTokenId(coinId);
+                    break;
                 case MINT_NFT:
                     //process MINT_NFT request and fill the response...
                 case SEARCH_NFT:
