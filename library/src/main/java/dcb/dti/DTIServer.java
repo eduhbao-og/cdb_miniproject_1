@@ -153,7 +153,17 @@ public class DTIServer extends DefaultSingleRecoverable {
                     response.setTokenId(coinId);
                     break;
                 case MINT_NFT:
-                    break;
+                    NFT nft = new NFT(++nftId, senderId, request.getName(), request.getUri(), request.getValue());
+                    if(storedNFTs.containsKey(nftId)){
+                        return new byte[0];
+                    }
+                    for(Map.Entry<Long, NFT> entry : storedNFTs.entrySet()) {
+                        if(entry.getValue().name.equals(nft.name)) {
+                            return new byte[0];
+                        }
+                    }
+                    storedNFTs.put(nftId, nft);
+                    response.setTokenId(nftId);
                 case SEARCH_NFT:
                     break;
                 case SET_NFT_PRICE:
