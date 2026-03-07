@@ -12,3 +12,5 @@ library/build/tmp/compileJava/previous-compilation-data.bin
 library/build/tmp/compileJava/compileTransaction/stash-dir/DTIClient.class.uniqueId0
 library/build/install/library/lib/BFT-SMaRt.jar
 library/build/libs/BFT-SMaRt.jar
+library/bin/main/dcb/dti/*.class
+library/build/tmp/compileJava/compileTransaction/stash-dir/*
