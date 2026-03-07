@@ -49,16 +49,12 @@ public class DTIServer extends DefaultSingleRecoverable {
             switch (cmd) {
                 case MY_COINS:
                     //process MYCOINS request and fill the response...
+                case MY_NFTS:
+                    response.setNFTs(storedNFTs);
                 case MINT:
-                    if(senderId != 4 ){
-                        return new byte[0];
-                    }
-                    Coin coin = new Coin(++ coinId, senderId, request.getValue());
-                    if(storedCoins.containsKey(coinId)){
-                        return new byte[0];
-                    }
-                    storedCoins.put(coinId, coin);
-                    response.setTokenId(coinId);
+                    //process MYCOINS request and fill the response...
+                
+                //deal with other cases...
             }
 
             return GenericMessage.toBytes(response);
@@ -84,7 +80,7 @@ public class DTIServer extends DefaultSingleRecoverable {
                 case MY_COINS:
                     //process MY_COINS request and fill the response...
                 case MY_NFTS:
-                    //process MY_NFTS request and fill the response...
+                    response.setNFTs(storedNFTs);
                 //deal with other cases...
             }
 

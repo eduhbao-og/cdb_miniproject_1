@@ -6,6 +6,7 @@ package dcb.dti;
 
 import java.io.Console;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
@@ -42,6 +43,16 @@ public class DTIClient {
                 
                 TreeMap<Long, Coin> coins = dtiStub.MY_COINS();
                 System.out.println("\ncoins: " + coins + "\n");
+
+            } else if(cmd.equalsIgnoreCase("MY_NFTS")){
+                
+                TreeMap<Long, NFT> nfts = dtiStub.MY_NFTS();
+                System.out.println("\nnfts: ");
+                for(Map.Entry<Long, NFT> entry : nfts.entrySet()) {
+                    System.out.println("\nid: " + entry.getKey() 
+                                    + ", name: " + entry.getValue().name 
+                                    + ", URI: " + entry.getValue().uri);
+                }
 
             } else if (cmd.equalsIgnoreCase("EXIT")) {
 

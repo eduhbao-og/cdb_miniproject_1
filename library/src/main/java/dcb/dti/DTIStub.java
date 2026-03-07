@@ -50,7 +50,7 @@ public class DTIStub {
             //invokes BFT-SMaRt
             rep = serviceProxy.invokeOrdered(GenericMessage.toBytes(request));
         } catch (IOException e) {
-            System.err.println("Failed to send MINT request");
+            System.err.println("Failed to send MY_COINS request");
             return null;
         }
 
@@ -61,10 +61,35 @@ public class DTIStub {
             GenericMessage response = GenericMessage.fromBytes(rep);
             return response.getCoins();
         } catch (ClassNotFoundException | IOException ex) {
-            System.err.println("Failed to deserialized response of MINT request "+ex);
+            System.err.println("Failed to deserialized response of MY_COINS request "+ex);
             return null;
         }
     }
 
-    //add other methods to invoke the other operations (MY_COINS, MY_NFTS, MINT_NFT, SET_NFT_PRICE, SEARCH_NFT, BUY_NFT)...
+    //MY_NFTS(): list the ID, name, URI, and value of the NFTs the issuer possesses.
+    public TreeMap<Long, NFT> MY_NFTS(){
+        byte[] rep;
+        try {
+            GenericMessage request = new GenericMessage(GenericMessage.Type.MY_NFTS);
+
+            //invokes BFT-SMaRt
+            rep = serviceProxy.invokeOrdered(GenericMessage.toBytes(request));
+        } catch (IOException e) {
+            System.err.println("Failed to send MY_NFTS request");
+            return null;
+        }
+
+        if (rep.length == 0) {
+            return null;
+        }
+        try {
+            GenericMessage response = GenericMessage.fromBytes(rep);
+            return response.getNFTs();
+        } catch (ClassNotFoundException | IOException ex) {
+            System.err.println("Failed to deserialized response of MY_NFTS request "+ex);
+            return null;
+        }
+    }
+
+    //add other methods to invoke the other operations (MY_NFTS, MINT_NFT, SET_NFT_PRICE, SEARCH_NFT, BUY_NFT)...
 }
