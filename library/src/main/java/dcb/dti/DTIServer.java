@@ -13,6 +13,7 @@ import java.util.TreeMap;
 
 public class DTIServer extends DefaultSingleRecoverable {
     private TreeMap<Long, Coin> storedCoins;
+    private long coinId;
     private TreeMap<Long, NFT> storedNFTs;
 
     //The constructor passes the id of the server to the super class
@@ -20,6 +21,7 @@ public class DTIServer extends DefaultSingleRecoverable {
 
         //turn-on BFT-SMaRt'replica
         new ServiceReplica(id, this, this);
+        coinId = 0;
         storedCoins = new TreeMap<Long, Coin>();
         storedNFTs = new TreeMap<Long, NFT>();
     }
@@ -51,7 +53,12 @@ public class DTIServer extends DefaultSingleRecoverable {
                     if(senderId != 4 ){
                         return new byte[0];
                     }
-                    Coin coin = new Coin();
+                    Coin coin = new Coin(++ coinId, senderId, request.getValue());
+                    if(storedCoins.containsKey(coinId)){
+                        return new byte[0];
+                    }
+                    storedCoins.put(coinId, coin);
+                    response.setTokenId(coinId);
             }
 
             return GenericMessage.toBytes(response);
@@ -92,6 +99,7 @@ public class DTIServer extends DefaultSingleRecoverable {
     public byte[] getSnapshot() {
         try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
              ObjectOutput out = new ObjectOutputStream(bos)) {
+            out.writeObject(coinId);
             out.writeObject(storedCoins);
             out.writeObject(storedNFTs);
             out.flush();
@@ -108,6 +116,7 @@ public class DTIServer extends DefaultSingleRecoverable {
     public void installSnapshot(byte[] state) {
         try (ByteArrayInputStream bis = new ByteArrayInputStream(state);
              ObjectInput in = new ObjectInputStream(bis)) {
+            coinId = (long) in.readObject();
             storedCoins = (TreeMap<Long, Coin>) in.readObject();
             storedNFTs = (TreeMap<Long, NFT>) in.readObject();
         } catch (ClassNotFoundException | IOException ex) {
